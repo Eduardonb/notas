@@ -13,11 +13,13 @@ if ($resource == '/notas' && $method == 'POST') {
 }
 
 if ($method == 'GET') {
-	die('Visualisa UMA nota');
+	include __DIR__ . '/../src/viewNote.php';
+	die('');
 }
 
 if ($method == 'PUT') {
-	die('Altera UMA nota');
+	include __DIR__ . '/../src/editNote.php';
+	die('');
 }
 
 if ($method == 'DELETE') {
