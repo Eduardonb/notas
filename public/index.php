@@ -23,5 +23,6 @@ if ($method == 'PUT') {
 }
 
 if ($method == 'DELETE') {
-	die('Remove UMA nota');
+	include __DIR__ . '/../src/deleteNote.php';
+	die('');
 }
