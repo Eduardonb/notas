@@ -72,7 +72,7 @@ class Note
         return $this->slug;
     }
 
-    public function setSlug($slug) // Por que existe este método, ele a alteração do atributo poderia ser diretamente no setTile()?
+    public function setSlug($slug) // Por que existe este método, a alteração do atributo poderia ser diretamente no setTile()?
     {
         $this->slug = $slug;
         $this->arrayNote['slug'] = $this->slug;
@@ -85,7 +85,7 @@ class Note
 
     public function toArray()
     {
-        return $this->arrayNote;
+        return $this->arrayNote; // Aqui deveria criar o array SOMENTE quando necessário, para não termos esse atributo que não faz sentido à classe
     }
 } // NUNCA utilize a tag de fechamento do PHP caso o arquivo tenha APENAS código PHP
 ?>
