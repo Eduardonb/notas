@@ -12,6 +12,6 @@
 		"phpunit/phpunit": "~4.1"
 	},
 	"autoload": {
-		"psr-4": {"": "src"}
+		"psr-4": {"IW\\NoteManager\\": "src"}
 	}
 }
