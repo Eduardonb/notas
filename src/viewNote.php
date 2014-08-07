@@ -2,7 +2,6 @@
 $database = include __DIR__ . '/database.php';
 
 $list = $database->prepare("SELECT * FROM note WHERE slug = ?");
-$list->execute(array($GLOBALS['noteSlug']));
+$list->execute(array($GLOBALS['slug']));
 
-header("Content-type: application/json");
-echo json_encode($list->fetch(PDO::FETCH_ASSOC));
+return $list->fetch(PDO::FETCH_ASSOC);
