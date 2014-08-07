@@ -4,6 +4,7 @@ namespace IW\NoteManager\Notes\Controllers;
 
 use Lcobucci\ActionMapper2\Routing\Annotation\Route;
 use Lcobucci\ActionMapper2\Routing\Controller;
+use IW\NoteManager\Notes\Model\Note;
 
 class Notes extends Controller
 {
@@ -30,15 +31,29 @@ class Notes extends Controller
 			throw new \InvalidArgumentException('O conteúdo deve ser definido');
 		}
 		
-		$GLOBALS['title'] = $this->request->request->get('title');
-		$GLOBALS['content'] = $this->request->request->get('content');
+// 		$GLOBALS['title'] = $this->request->request->get('title');
+// 		$GLOBALS['content'] = $this->request->request->get('content');
 		
-		$note = require_once __DIR__ . '/../../createNote.php';
+		//$note = require_once __DIR__ . '/../../createNote.php';
+		
+		$entityManager = $this->get('orm.em');
+		
+		$note = new Note();
+		$note->setTitle($this->request->request->get('title'));
+		$note->setContent($this->request->request->get('content'));
+		$note->setSlug($note->createSlug($this->request->request->get('title')));
+		
+		$entityManager->persist($note);
+		var_dump($entityManager);
+		die();
+		
+// 		$entityManager->flush();
+		
 		
 		$this->response->setStatusCode(201);
 		$this->response->setContentType('application/json');
-		$this->response->headers->set('Location', $this->request->getUriForPath('/nota/' . $note['slug']));
+		$this->response->headers->set('Location', $this->request->getUriForPath('/nota/' . $note->getSlug()));
 		
-		return json_encode($note);		
+		return json_encode($note->toArray());		
 	}
 }
