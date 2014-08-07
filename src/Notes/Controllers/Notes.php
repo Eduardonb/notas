@@ -14,8 +14,8 @@ class Notes extends Controller
 	public function listAll()
 	{
 		$this->response->setContentType('application/json');
-		
-		return json_encode(require_once __DIR__ . '/../../listNotes.php');
+
+		return json_encode(require_once __DIR__ . '/../../../scripts/listNotes.php');
 	}
 
 	/**
@@ -26,34 +26,34 @@ class Notes extends Controller
 		if (!$this->request->request->has('title')) {
 			throw new \InvalidArgumentException('O título deve ser definido');
 		}
-		
+
 		if (!$this->request->request->has('content')) {
 			throw new \InvalidArgumentException('O conteúdo deve ser definido');
 		}
-		
+
 // 		$GLOBALS['title'] = $this->request->request->get('title');
 // 		$GLOBALS['content'] = $this->request->request->get('content');
-		
-		//$note = require_once __DIR__ . '/../../createNote.php';
-		
+
+		//$note = require_once __DIR__ . '/../../../scripts/createNote.php';
+
 		$entityManager = $this->get('orm.em');
-		
+
 		$note = new Note();
 		$note->setTitle($this->request->request->get('title'));
 		$note->setContent($this->request->request->get('content'));
 		$note->setSlug($note->createSlug($this->request->request->get('title')));
-		
+
 		$entityManager->persist($note);
 		var_dump($entityManager);
 		die();
-		
+
 // 		$entityManager->flush();
-		
-		
+
+
 		$this->response->setStatusCode(201);
 		$this->response->setContentType('application/json');
 		$this->response->headers->set('Location', $this->request->getUriForPath('/nota/' . $note->getSlug()));
-		
-		return json_encode($note->toArray());		
+
+		return json_encode($note->toArray());
 	}
 }

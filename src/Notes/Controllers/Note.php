@@ -14,10 +14,10 @@ class Note extends Controller
 	{
 		$this->response->setContentType('application/json');
 		$GLOBALS['slug'] = $slug;
-		
-		return json_encode(require_once __DIR__ . '/../../viewNote.php');
+
+		return json_encode(require_once __DIR__ . '/../../../scripts/viewNote.php');
 	}
-	
+
 	/**
 	 * @Route("/", methods={"PUT"})
 	 */
@@ -26,28 +26,28 @@ class Note extends Controller
 		if (!$this->request->request->has('title')) {
 			throw new \InvalidArgumentException('O título deve ser definido');
 		}
-		
+
 		if (!$this->request->request->has('content')) {
 			throw new \InvalidArgumentException('O conteúdo deve ser definido');
 		}
-		
+
 		$this->response->setContentType('application/json');
-		
+
 		$GLOBALS['slug'] = $slug;
 		$GLOBALS['title'] = $this->request->request->get('title');
 		$GLOBALS['content'] = $this->request->request->get('content');
-		
-		return json_encode(require_once __DIR__ . '/../../editNote.php');
+
+		return json_encode(require_once __DIR__ . '/../../../scripts/editNote.php');
 	}
-	
+
 	/**
 	 * @Route("/", methods={"DELETE"})
 	 */
 	public function delete($slug)
 	{
 		$GLOBALS['slug'] = $slug;
-		require_once __DIR__ . '/../../deleteNote.php';
-		
+		require_once __DIR__ . '/../../../scripts/deleteNote.php';
+
 		$this->response->setStatusCode(204);
 	}
 }
