@@ -4,7 +4,7 @@ namespace IW\NoteManager\Notes\Controllers;
 
 use Lcobucci\ActionMapper2\Routing\Annotation\Route;
 use Lcobucci\ActionMapper2\Routing\Controller;
-use IW\NoteManager\Notes\Model\Note;
+use IW\NoteManager\Notes\Model\Note as NoteEntity;
 
 class Notes extends Controller
 {
@@ -38,17 +38,13 @@ class Notes extends Controller
 
 		$entityManager = $this->get('orm.em');
 
-		$note = new Note();
+		$note = new NoteEntity();
 		$note->setTitle($this->request->request->get('title'));
 		$note->setContent($this->request->request->get('content'));
 		$note->setSlug($note->createSlug($this->request->request->get('title')));
 
 		$entityManager->persist($note);
-		var_dump($entityManager);
-		die();
-
-// 		$entityManager->flush();
-
+		$entityManager->flush();
 
 		$this->response->setStatusCode(201);
 		$this->response->setContentType('application/json');
