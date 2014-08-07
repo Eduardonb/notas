@@ -39,4 +39,15 @@ class Note extends Controller
 		
 		return json_encode(require_once __DIR__ . '/../../editNote.php');
 	}
+	
+	/**
+	 * @Route("/", methods={"DELETE"})
+	 */
+	public function delete($slug)
+	{
+		$GLOBALS['slug'] = $slug;
+		require_once __DIR__ . '/../../deleteNote.php';
+		
+		$this->response->setStatusCode(204);
+	}
 }
