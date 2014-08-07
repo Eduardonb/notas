@@ -1,26 +1,24 @@
 <?php
 
-if (!isset($_GET['title'])) {
+$params = array();
+parse_str(file_get_contents('php://input'), $params);
+
+if (!isset($params['title'])) {
 	die('Define o título poow');
 }
 
-if (!isset($_GET['content'])) {
+if (!isset($params['content'])) {
 	die('Define o content poow');
 }
 
+include_once __DIR__ . '/createSlug.php';
 $database = include __DIR__ . '/database.php';
-$update = $database->prepare('UPDATE note SET title = :title, content = :content, slug = :novoslug WHERE slug = :slug');
-
-function createSlug($title)
-{
-	return $title;
-}
+$update = $database->prepare('UPDATE note SET title = :title, content = :content, slug = :slug WHERE slug = :key');
 
 $nota = array(
-	'title' => $_GET['title'],
-	'content' => $_GET['content'],
-	'slug' => $_GET['slug'],
-	'novoslug' => createSlug($_GET['title'])
+	'title' => $params['title'],
+	'content' => $params['content'],
+	'slug' => createSlug($params['title'])
 );
 
 $update->execute(
@@ -28,8 +26,9 @@ $update->execute(
 		':title' => $nota['title'],
 		':content' => $nota['content'],
 		':slug' => $nota['slug'],
-		':novoslug' => $nota['novoslug']
+		':key' => $GLOBALS['noteSlug']
 	)
 );
 
+header("Content-type: application/json");
 echo json_encode($nota);

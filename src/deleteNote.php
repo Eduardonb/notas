@@ -1,17 +1,7 @@
 <?php
-
 $database = include __DIR__ . '/database.php';
+
 $delete = $database->prepare('DELETE FROM note WHERE slug = :slug');
+$delete->execute(array(':slug' => $GLOBALS['noteSlug']));
 
-
-$nota = array(
-	'slug' => $_GET['slug']
-);
-
-$delete->execute(
-	array(
-		':slug' => $nota['slug']
-	)
-);
-
-echo json_encode($nota);
+header($_SERVER["SERVER_PROTOCOL"] . " 204");

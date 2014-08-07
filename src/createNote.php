@@ -7,13 +7,9 @@ if (!isset($_POST['content'])) {
 	die('Define o content poow');
 }
 
+include_once __DIR__ . '/createSlug.php';
 $database = include __DIR__ . '/database.php';
 $insert = $database->prepare('INSERT INTO note VALUES (null, :title, :content, :slug)');
-
-function createSlug($title)
-{
-	return $title;
-}
 
 $nota = array(
 	'title' => $_POST['title'],
@@ -29,4 +25,7 @@ $insert->execute(
 	)
 );
 
+header($_SERVER["SERVER_PROTOCOL"] . " 201");
+header("Location: " . $GLOBALS['baseUri'] . '/nota/' . $nota['slug']);
+header("Content-type: application/json");
 echo json_encode($nota);

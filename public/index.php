@@ -1,6 +1,7 @@
 <?php
 $method = $_SERVER['REQUEST_METHOD'];
-$resource = str_replace('/workspace/notas/public', '', $_SERVER['REQUEST_URI']);
+$baseUri = '/workspace/notas/public';
+$resource = str_replace($baseUri, '', $_SERVER['REQUEST_URI']);
 
 if ($resource == '/notas' && $method == 'GET') {
 	include __DIR__ . '/../src/listNotes.php';
@@ -12,17 +13,19 @@ if ($resource == '/notas' && $method == 'POST') {
 	die();
 }
 
+$noteSlug = substr($resource, 6);
+
 if ($method == 'GET') {
 	include __DIR__ . '/../src/viewNote.php';
-	die('');
+	die();
 }
 
 if ($method == 'PUT') {
 	include __DIR__ . '/../src/editNote.php';
-	die('');
+	die();
 }
 
 if ($method == 'DELETE') {
 	include __DIR__ . '/../src/deleteNote.php';
-	die('');
+	die();
 }
