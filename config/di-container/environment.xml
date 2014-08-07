@@ -1,0 +1,20 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services ../../vendor/symfony/dependency-injection/Symfony/Component/DependencyInjection/Loader/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="app.devmode">false</parameter>
+        
+        <parameter key="cache.namespace"></parameter>
+        
+        <parameter key="db.host">127.0.0.1</parameter>
+        <parameter key="db.schema"></parameter>
+        <parameter key="db.user">root</parameter>
+        <parameter key="db.passwd">root</parameter>
+        <parameter key="db.driver">pdo_mysql</parameter>
+        <parameter key="db.charset">utf8</parameter>
+        
+        <parameter key="orm.proxy.namespace">Proxy</parameter>
+        <parameter key="orm.entity.basedir">src</parameter>
+    </parameters>
+</container>
+

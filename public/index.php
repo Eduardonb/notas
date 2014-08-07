@@ -1,4 +1,18 @@
 <?php
+require_once __DIR__ . '/../boot.php';
+
+use Lcobucci\ActionMapper2\Config\ApplicationBuilder;
+
+$app = ApplicationBuilder::build(
+    __DIR__ . '/../config/routes.xml',
+    require __DIR__ . '/../config/di-config.php'
+);
+
+$app->run();
+
+/*
+
+
 $method = $_SERVER['REQUEST_METHOD'];
 $baseUri = '/workspace/notas/public';
 $resource = str_replace($baseUri, '', $_SERVER['REQUEST_URI']);
@@ -28,4 +42,4 @@ if ($method == 'PUT') {
 if ($method == 'DELETE') {
 	include __DIR__ . '/../src/deleteNote.php';
 	die();
-}
+}*/
