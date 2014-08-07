@@ -2,9 +2,11 @@
 
 namespace IW\NoteManager\Notes\Model;
 
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity @Table(name="note")
+ * @ORM\Entity
+ * @ORM\Table(name="note")
  **/
 class Note {
 
@@ -20,12 +22,12 @@ class Note {
 	 * @var string
 	 */
 	protected $content;
-	
+
 	/**
 	 * @var string
 	 */
 	protected $slug;
-	
+
 	/**
 	 * @var array
 	 */
@@ -46,34 +48,34 @@ class Note {
 		$this->title = $title;
 		$this->arrayNote['title'] = $this->title;
 	}
-	
+
 	public function getContent()
 	{
 		return $this->content;
 	}
-	
+
 	public function setContent($content)
 	{
 		$this->content = $content;
 		$this->arrayNote['content'] = $this->content;
 	}
-	
+
 	public function getSlug()
 	{
 		return $this->slug;
 	}
-	
+
 	public function setSlug($slug)
 	{
 		$this->slug = $slug;
 		$this->arrayNote['slug'] = $this->slug;
 	}
-	
+
 	public function createSlug($title)
 	{
 		return $title;
 	}
-	
+
 	public function toArray()
 	{
 		return $this->arrayNote;
