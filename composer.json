@@ -3,7 +3,7 @@
 	"description": "The most amazing API for notes",
 	"type": "project",
 	"require": {
-		"lcobucci/action-mapper": "1.0.0-alpha13@dev",
+		"lcobucci/action-mapper": "1.0.0-alpha14@dev",
 		"doctrine/orm": "2.5.*@dev",
 		"doctrine/dbal": "2.5.*@dev",
 		"symfony/expression-language": "*"
