@@ -2,7 +2,7 @@
 
 namespace IW\NoteManager\Notes\Model;
 
-// src/Notes/Model/Note.php
+
 /**
  * @Entity @Table(name="note")
  **/
