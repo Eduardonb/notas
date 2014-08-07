@@ -18,10 +18,10 @@
         
         <service id="orm.config" class="Doctrine\ORM\Configuration">
             <call method="setMetadataCacheImpl">
-                <argument type="service" id="cache.apc" />
+                <argument type="service" id="cache.array" />
             </call>
             <call method="setResultCacheImpl">
-                <argument type="service" id="cache.apc" />
+                <argument type="service" id="cache.array" />
             </call>
             <call method="setProxyDir">
                 <argument>%app.basedir%tmp</argument>
@@ -43,7 +43,7 @@
         </service>
         
         <service id="orm.config.annotation.cachedreader" class="Doctrine\Common\Annotations\CachedReader">
-            <argument type="service"  id="orm.config.annotation.reader" />
+            <argument type="service" id="orm.config.annotation.reader" />
             <argument type="service" id="cache.array" />
         </service>
         
