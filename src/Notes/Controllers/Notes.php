@@ -54,17 +54,4 @@ class Notes extends Controller
 
 		return json_encode($note->toArray());
 	}
-	
-
-	/**
-	 * @Route("/", methods={"DELETE"})
-	 */
-	public function delete()
-	{
-		if (!$this->request->request->has('title')) {
-			throw new \InvalidArgumentException('O título deve ser definido');
-		}
-		
-		
-	}
 }
