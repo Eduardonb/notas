@@ -32,12 +32,16 @@ class Note extends Controller
 		}
 
 		$this->response->setContentType('application/json');
+		
+		$note = $this->getNote($slug);
+		$note->setTitle($this->request->request->get('title'));
+		$note->setContent($this->request->request->get('content'));
+		
+		$em = $this->get('orm.em');
+		$em->persist($note);
+		$em->flush();
 
-		$GLOBALS['slug'] = $slug;
-		$GLOBALS['title'] = $this->request->request->get('title');
-		$GLOBALS['content'] = $this->request->request->get('content');
-
-		return json_encode(require_once __DIR__ . '/../../../scripts/editNote.php');
+		return json_encode($note->toArray());
 	}
 
 	/**
