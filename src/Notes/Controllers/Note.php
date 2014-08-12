@@ -13,9 +13,9 @@ class Note extends Controller
 	public function show($slug)
 	{
 		$this->response->setContentType('application/json');
-		$GLOBALS['slug'] = $slug;
+		$note = $this->getNote($slug);
 
-		return json_encode(require_once __DIR__ . '/../../../scripts/viewNote.php');
+		return json_encode($note->toArray());
 	}
 
 	/**
