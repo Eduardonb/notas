@@ -31,17 +31,11 @@ class Notes extends Controller
 			throw new \InvalidArgumentException('O conteúdo deve ser definido');
 		}
 
-// 		$GLOBALS['title'] = $this->request->request->get('title');
-// 		$GLOBALS['content'] = $this->request->request->get('content');
-
-		//$note = require_once __DIR__ . '/../../../scripts/createNote.php';
-
 		$entityManager = $this->get('orm.em');
 
 		$note = new NoteEntity();
 		$note->setTitle($this->request->request->get('title'));
 		$note->setContent($this->request->request->get('content'));
-		$note->setSlug($note->createSlug($this->request->request->get('title')));
 
 		$entityManager->persist($note);
 		$entityManager->flush();
@@ -51,5 +45,18 @@ class Notes extends Controller
 		$this->response->headers->set('Location', $this->request->getUriForPath('/nota/' . $note->getSlug()));
 
 		return json_encode($note->toArray());
+	}
+	
+
+	/**
+	 * @Route("/", methods={"DELETE"})
+	 */
+	public function delete()
+	{
+		if (!$this->request->request->has('title')) {
+			throw new \InvalidArgumentException('O título deve ser definido');
+		}
+		
+		
 	}
 }
