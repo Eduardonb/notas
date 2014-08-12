@@ -14,8 +14,16 @@ class Notes extends Controller
 	public function listAll()
 	{
 		$this->response->setContentType('application/json');
+		$entityManager = $this->get('orm.em');
+		
+		$notes = array();
+		
+		foreach ($entityManager->getRepository('IW\NoteManager\Notes\Model\Note')->findAll() as $note) {
+			$notes[] = $note->toArray();
+		}
+		
 
-		return json_encode(require_once __DIR__ . '/../../../scripts/listNotes.php');
+		return json_encode($notes);
 	}
 
 	/**
