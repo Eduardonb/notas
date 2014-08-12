@@ -1,12 +1,6 @@
 <?php
 namespace IW\NoteManager\Notes\Model;
 
-/* Havia faltado isto, a documentação do doctrine considera que as annotations
- * estão sendo mágicamente registradas, quando na verdade devemos importá-las com o comando `use`.
- *
- * Vejam como estão sendo utilizadas as anotações no docblox da classe.
- */
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,30 +9,34 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Note
 {
-    /**
-     * @var int
-     */
-    protected $id; // Cadê o mapeamento da coluna?
+	/**
+	 * @ORM\Column(type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 * 
+	 * @var int
+	 */
+    private $id;
 
     /**
      * @var string
+     * @ORM\Column(type="string")
      */
-    protected $title; // Cadê o mapeamento da coluna?
+    private $title;
 
     /**
      * @var string
+     * 
+     * @ORM\Column(type="text")
      */
-    protected $content; // Cadê o mapeamento da coluna?
+    private $content;
 
     /**
      * @var string
+     * 
+     * @ORM\Column(type="string")
      */
-    protected $slug; // Cadê o mapeamento da coluna?
-
-    /**
-     * @var array
-     */
-    protected $arrayNote = array(); // Pra que precisamos deste atributo?
+    private $slug;
 
     public function getId()
     {
@@ -53,7 +51,12 @@ class Note
     public function setTitle($title)
     {
         $this->title = $title;
-        $this->arrayNote['title'] = $this->title; // Pra que esta operação?
+        $this->slug = $this->createSlug($title);
+    }
+    
+    private function createSlug($title)
+    {
+    	return strtolower(str_replace(' ', '-', $title));
     }
 
     public function getContent()
@@ -64,7 +67,7 @@ class Note
     public function setContent($content)
     {
         $this->content = $content;
-        $this->arrayNote['content'] = $this->content; // Pra que esta operação?
+        
     }
 
     public function getSlug()
@@ -72,20 +75,12 @@ class Note
         return $this->slug;
     }
 
-    public function setSlug($slug) // Por que existe este método, a alteração do atributo poderia ser diretamente no setTile()?
-    {
-        $this->slug = $slug;
-        $this->arrayNote['slug'] = $this->slug;
-    }
-
-    public function createSlug($title) // Por que este método é publico?
-    {
-        return $title;
-    }
-
     public function toArray()
     {
-        return $this->arrayNote; // Aqui deveria criar o array SOMENTE quando necessário, para não termos esse atributo que não faz sentido à classe
+        return array(
+        	'title' => $this->title,
+        	'slug' => $this->title,
+        	'content' => $this->content
+        );
     }
-} // NUNCA utilize a tag de fechamento do PHP caso o arquivo tenha APENAS código PHP
-?>
+}
