@@ -45,9 +45,22 @@ class Note extends Controller
 	 */
 	public function delete($slug)
 	{
-		$GLOBALS['slug'] = $slug;
-		require_once __DIR__ . '/../../../scripts/deleteNote.php';
+		$note = $this->getNote($slug);
+		
+		$em = $this->get('orm.em');
+		$em->remove($note);
+		$em->flush();
 
 		$this->response->setStatusCode(204);
+	}
+	
+	/**
+	 * @param string $slug
+	 * 
+	 * @return \IW\NoteManager\Notes\Model\Note
+	 */
+	private function getNote($slug)
+	{
+		return $this->get('orm.em')->getRepository('IW\NoteManager\Notes\Model\Note')->findOneBySlug($slug);
 	}
 }
